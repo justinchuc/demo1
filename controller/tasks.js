@@ -1,6 +1,32 @@
 $(function () {
     $("#createtask_failure").hide();
     $("#createtask_success").hide();
+
+    $(".typeSelect").select2({
+      placeholder: "Type Task Type",
+      minimumInputLength: 1,
+      dropdownAutoWidth: true,
+      width: '100%',
+      ajax: {
+          url: "../../model/typeList.php",
+          dataType: "json",
+          type: "GET",
+          delay: 250,
+          data: function (params) {
+              return {
+                  q: params.term,
+              };
+          },
+          processResults: function (data) {
+              return {
+                  results: data
+              };
+
+          },
+          cache: false
+      }
+
+  });
    
   });
 

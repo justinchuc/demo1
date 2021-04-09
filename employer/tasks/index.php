@@ -38,6 +38,8 @@ while ($row = mysqli_fetch_array($result)) {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.css" integrity="sha512-p209YNS54RKxuGVBVhL+pZPTioVDcYPZPYYlKWS9qVvQwrlzxBxkR8/48SCP58ieEuBosYiPUS970ixAfI/w/A==" crossorigin="anonymous" />
+
   <link rel="stylesheet" media="all" href="../../css/style.css" />
 
 </head>
@@ -190,7 +192,9 @@ while ($row = mysqli_fetch_array($result)) {
                   </div>
                   <div>
                     <label class="ml-3">Task Type</label>
-                    <input type="number" id="createttype" name="create_ttype" class="form-control" required>
+                    <select id="createttype" name="create_ttype" class="typeSelect form-control" required>
+                      <option value=""></option>
+                    </select>
                     <span id="errorTType" class="help-block text-danger"></span>
                   </div>
                   <div class="form-row mt-2">
@@ -236,14 +240,14 @@ while ($row = mysqli_fetch_array($result)) {
 
         <!-- modal end -->
 
+      </div>
+      <footer class="footer-section text-center">
+        <div class="container">
+          <p>Copyright &copy; 2020 &middot; All Rights Reserved &middot; <a href="#">EmployME.bz</a></p>
         </div>
-        <footer class="footer-section text-center">
-          <div class="container">
-            <p>Copyright &copy; 2020 &middot; All Rights Reserved &middot; <a href="#">EmployME.bz</a></p>
-          </div>
-        </div>
-      
     </div>
+
+  </div>
   </div>
 
 
@@ -251,6 +255,8 @@ while ($row = mysqli_fetch_array($result)) {
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.js" integrity="sha512-tvs4l2C3VPcCHzUU1KGG+jWWTO7H0stvk1jwn6pr4B1uimcL/2api3rnmkMhVQ6DglgxLcqyLSDS1IF5eyeTRg==" crossorigin="anonymous"></script>
+
   <script src="../../controller/tasks.js"></script>
 
 </body>
