@@ -1,4 +1,16 @@
-﻿<!DOCTYPE html>
+﻿<?php
+// Initialize the session
+session_start();
+
+// Check if the user is logged in, if not then redirect him to login page
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+  header("location: ../login.php");
+  exit;
+}
+require_once "../config.php";
+
+?>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -25,7 +37,7 @@
           <a class="nav-link" href="../employer/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="tasks.php">Tasks</a>
+          <a class="nav-link" href="tasks/">Tasks</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Account</a>

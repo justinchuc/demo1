@@ -1,4 +1,17 @@
-﻿<!DOCTYPE html>
+﻿<?php
+// Initialize the session
+session_start();
+
+// Check if the user is logged in, if not then redirect him to login page
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+  header("location: ../../login.php");
+  exit;
+}
+require_once "../../config.php";
+
+?>
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -21,16 +34,16 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="../employer/">Home</a>
+          <a class="nav-link" href="../../employer/">Home</a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="tasks.php">Tasks</a>
+          <a class="nav-link" href="../tasks/">Tasks</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Account</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../logout.php">Logout</a>
+          <a class="nav-link" href="../../logout.php">Logout</a>
         </li>
 
         <li class="nav-item">
@@ -88,7 +101,7 @@
               </div>
               <div class="form-group">
                 <label class="ml-3">Location</label>
-                <input type="text" id="createtlocation" name="create_tlocation" class="form-control">
+                <input type="number" id="createtlocation" name="create_tlocation" class="form-control">
                 <span id="errorLocation" class="help-block text-danger"></span>
               </div>
               <div class="form-group text-center">
@@ -114,6 +127,8 @@
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="../controller/patient.js"></script>
+
 </body>
 
 </html>
