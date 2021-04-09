@@ -84,20 +84,12 @@ while ($row = mysqli_fetch_array($result)) {
 
       <div class="container"> <br>
         <div class="row">
-          <div class="col-md-12">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#createTask">Create Task</button>
-          </div>
-          <div class="alert_window">
-            <div id="createtask_success" class="alert alert-success show" role="alert">
-            </div>
-            <div id="createtask_failure" class="alert alert-danger show" role="alert">
-            </div>
-          </div>
+       
         </div>
         <!--tasks table-->
         <div class="row row-content d-flex justify-content-center">
           <br>
-          <h3 class="d-block">Open Tasks</h3>
+          <h3 class="d-block">Your Tasks</h3>
 
           <div class="col-md-12 table-responsive table-sm">
             <br>
@@ -172,80 +164,6 @@ while ($row = mysqli_fetch_array($result)) {
         </div>
 
         
-        <!-- Create Task Modal -->
-        <div class="modal fade" id="createTask" tabindex="-1" role="dialog" aria-labelledby="createTaskLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="createTaskLabel">Create Task</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form action="" name="createTask" onsubmit="createT()" method="post">
-
-                  <div>
-                    <label class="ml-3">Task Name</label>
-                    <input type="text" id="createtname" name="create_tname" class="form-control" required>
-                    <span id="errorTName" class="help-block text-danger"></span>
-                  </div>
-                  <div>
-                    <label class="ml-3">Task Description</label>
-                    <input type="text" id="createtdesc" name="create_tdesc" class="form-control" required>
-                    <span id="errorTDesc" class="help-block text-danger"></span>
-                  </div>
-                  <div>
-                    <label class="ml-3">Task Type</label>
-                    <select id="createttype" name="create_ttype" class="typeSelect form-control" required>
-                      <option value=""></option>
-                    </select>
-                    <span id="errorTType" class="help-block text-danger"></span>
-                  </div>
-                  <div class="form-row mt-2">
-                    <div class="form-group col-md-6">
-                      <label class="ml-3">Min Price</label>
-                      <input type="number" id="createminprice" name="create_minprice" class="form-control" required>
-                      <span id="errorMinPrice" class="help-block text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label class="ml-3">Max Price</label>
-                      <input type="number" id="createmaxprice" name="create_maxprice" class="form-control" required>
-                      <span id="errorMaxPrice" class="help-block text-danger"></span>
-                    </div>
-                  </div>
-                  <div class="form-row mt-2">
-                    <div class="form-group col-md-6">
-                      <label class="ml-3">Date Begin</label>
-                      <input type="date" id="createdatebegin" name="createdatebegin" class="form-control" required>
-                      <span id="errorDateBegin" class="help-block text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label class="ml-3">Date End</label>
-                      <input type="date" id="createdateend" name="createdateend" class="form-control" required>
-                      <span id="errorDateEnd" class="help-block text-danger"></span>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="ml-3">Location</label>
-                    <select type="number" id="createtlocation" name="create_tlocation" class="locationSelect form-control">
-                      <option value=""></option>
-                    </select>
-                    <span id="errorLocation" class="help-block text-danger"></span>
-                  </div>
-                  <div class="form-group text-center">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-                  <input type="hidden" name="action" value="createTask">
-                  <input id="eID" type="hidden" name="action" value="<?php echo $empID ?>">
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- modal end -->
 
       </div>
       <footer class="footer-section text-center">
