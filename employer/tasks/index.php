@@ -145,7 +145,7 @@ while ($row = mysqli_fetch_array($result)) {
                         <button class="btn dropdown-toggle text-center green" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                          <a href="patdetails.php?GetID= <?php echo $row["ID"] ?>" class="dropdown-item">View Applications</a>
+                          <a href="" class="dropdown-item">View Applications</a>
                           <div class="dropdown-divider"></div>
                           <button class="dropdown-item  edit_patient" data-id="<?php echo $row["tID"]; ?>" data-toggle="modal" data-target="#editTask">Edit</button>
 
