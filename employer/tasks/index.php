@@ -38,209 +38,215 @@ while ($row = mysqli_fetch_array($result)) {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <link rel="stylesheet" media="all" href="../../css/style.css" />
 
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">EmployMe.bz</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="../../employer/">Home</a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="../tasks/">Tasks</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Account</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../../logout.php">Logout</a>
-        </li>
+  <div id="page-container">
+    <div id="content-wrap">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">EmployMe.bz</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="../../employer/">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="../tasks/">Tasks</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Account</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../logout.php">Logout</a>
+            </li>
 
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">&nbsp;</a>
-        </li>
-      </ul>
-      <!-- <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form> -->
-    </div>
-  </nav>
-  <!--nav end -->
-
-  <div class="container"> <br>
-    <div class="row">
-      <div class="col-md-12">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#createTask">Create Task</button>
-      </div>
-      <div class="alert_window">
-        <div id="createtask_success" class="alert alert-success show" role="alert">
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">&nbsp;</a>
+            </li>
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
         </div>
-        <div id="createtask_failure" class="alert alert-danger show" role="alert">
+      </nav>
+      <!--nav end -->
+
+      <div class="container"> <br>
+        <div class="row">
+          <div class="col-md-12">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#createTask">Create Task</button>
+          </div>
+          <div class="alert_window">
+            <div id="createtask_success" class="alert alert-success show" role="alert">
+            </div>
+            <div id="createtask_failure" class="alert alert-danger show" role="alert">
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <!--tasks table-->
-    <div class="row row-content d-flex justify-content-center">
-      <br>
-      <h3 class="d-block">Open Tasks</h3>
+        <!--tasks table-->
+        <div class="row row-content d-flex justify-content-center">
+          <br>
+          <h3 class="d-block">Open Tasks</h3>
 
-      <div class="col-md-12 table-responsive table-sm">
-        <br>
-        <table id="openTasksTable" class="table text-left table-striped">
-          <thead>
-            <tr class="table-header">
+          <div class="col-md-12 table-responsive table-sm">
+            <br>
+            <table id="openTasksTable" class="table text-left table-striped">
+              <thead>
+                <tr class="table-header">
 
-              <th>Task ID</th>
-              <th>Task Name</th>
-              <th>Date Begin</th>
-              <th>taskStatus</th>
-              <th>Location</th>
-              <th>Action</th>
+                  <th>Task ID</th>
+                  <th>Task Name</th>
+                  <th>Date Begin</th>
+                  <th>taskStatus</th>
+                  <th>Location</th>
+                  <th>Action</th>
 
-            </tr>
-          </thead>
-          <tbody>
-            <!-- appointment body starts here -->
-            <?php
-            // Check connection
-            if ($link->connect_error) {
-              die("Connection failed: " . $link->connect_error);
-            }
-            $sql = "SELECT tasks.taskID AS tID,
+                </tr>
+              </thead>
+              <tbody>
+                <!-- appointment body starts here -->
+                <?php
+                // Check connection
+                if ($link->connect_error) {
+                  die("Connection failed: " . $link->connect_error);
+                }
+                $sql = "SELECT tasks.taskID AS tID,
                 tasks.taskName AS tName,
                 tasks.taskDateBegin AS tDate,
                 tasks.taskStatus AS tStat,
                 location.locationName AS tLocation
                 FROM tasks
                 LEFT JOIN location ON tasks.locationID = location.locationID;";
-            $result = mysqli_query($link, $sql);
-            //if ($result->num_rows > 0) {
-            // output data of each row
-            $i = 0;
-            while ($row = mysqli_fetch_array($result)) {
-              $i++;
-            ?>
-              <tr>
-                <td> <?php echo $row["tID"] ?></td>
-                <td> <?php echo $row["tName"] ?></td>
-                <td> <?php echo $row["tDate"] ?></td>
-                <td> <?php echo $row["tStat"] ?></td>
-                <td> <?php echo $row["tLocation"] ?></td>
-                <td>
-                  <div class="dropdown">
-                    <button class="btn dropdown-toggle text-center green" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                      <a href="patdetails.php?GetID= <?php echo $row["ID"] ?>" class="dropdown-item">View Applications</a>
-                      <div class="dropdown-divider"></div>
-                      <button class="dropdown-item  edit_patient" data-id="<?php echo $row["tID"]; ?>" data-toggle="modal" data-target="#editTask">Edit</button>
+                $result = mysqli_query($link, $sql);
+                //if ($result->num_rows > 0) {
+                // output data of each row
+                $i = 0;
+                while ($row = mysqli_fetch_array($result)) {
+                  $i++;
+                ?>
+                  <tr>
+                    <td> <?php echo $row["tID"] ?></td>
+                    <td> <?php echo $row["tName"] ?></td>
+                    <td> <?php echo $row["tDate"] ?></td>
+                    <td> <?php echo $row["tStat"] ?></td>
+                    <td> <?php echo $row["tLocation"] ?></td>
+                    <td>
+                      <div class="dropdown">
+                        <button class="btn dropdown-toggle text-center green" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                          <a href="patdetails.php?GetID= <?php echo $row["ID"] ?>" class="dropdown-item">View Applications</a>
+                          <div class="dropdown-divider"></div>
+                          <button class="dropdown-item  edit_patient" data-id="<?php echo $row["tID"]; ?>" data-toggle="modal" data-target="#editTask">Edit</button>
 
-                      <button class="dropdown-item" type="button">Another Action</button>
+                          <button class="dropdown-item" type="button">Another Action</button>
+                        </div>
+                      </div>
+                    </td>
+
+                  </tr>
+                <?php    }
+                //} else {
+                //echo "0 results";
+
+                //  $link->close();
+                ?>
+              </tbody>
+            </table>
+
+
+
+          </div>
+
+        </div>
+        <!-- Create Task Modal -->
+        <div class="modal fade" id="createTask" tabindex="-1" role="dialog" aria-labelledby="createTaskLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="createTaskLabel">Create Task</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="" name="createTask" onsubmit="createT()" method="post">
+
+                  <div>
+                    <label class="ml-3">Task Name</label>
+                    <input type="text" id="createtname" name="create_tname" class="form-control" required>
+                    <span id="errorTName" class="help-block text-danger"></span>
+                  </div>
+                  <div>
+                    <label class="ml-3">Task Description</label>
+                    <input type="text" id="createtdesc" name="create_tdesc" class="form-control" required>
+                    <span id="errorTDesc" class="help-block text-danger"></span>
+                  </div>
+                  <div>
+                    <label class="ml-3">Task Type</label>
+                    <input type="number" id="createttype" name="create_ttype" class="form-control" required>
+                    <span id="errorTType" class="help-block text-danger"></span>
+                  </div>
+                  <div class="form-row mt-2">
+                    <div class="form-group col-md-6">
+                      <label class="ml-3">Min Price</label>
+                      <input type="number" id="createminprice" name="create_minprice" class="form-control" required>
+                      <span id="errorMinPrice" class="help-block text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label class="ml-3">Max Price</label>
+                      <input type="number" id="createmaxprice" name="create_maxprice" class="form-control" required>
+                      <span id="errorMaxPrice" class="help-block text-danger"></span>
                     </div>
                   </div>
-                </td>
-
-              </tr>
-            <?php    }
-            //} else {
-            //echo "0 results";
-
-            //  $link->close();
-            ?>
-          </tbody>
-        </table>
-
-
-
-      </div>
-
-    </div>
-    <!-- Create Task Modal -->
-  <div class="modal fade" id="createTask" tabindex="-1" role="dialog" aria-labelledby="createTaskLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="createTaskLabel">Create Task</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+                  <div class="form-row mt-2">
+                    <div class="form-group col-md-6">
+                      <label class="ml-3">Date Begin</label>
+                      <input type="date" id="createdatebegin" name="createdatebegin" class="form-control" required>
+                      <span id="errorDateBegin" class="help-block text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label class="ml-3">Date End</label>
+                      <input type="date" id="createdateend" name="createdateend" class="form-control" required>
+                      <span id="errorDateEnd" class="help-block text-danger"></span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="ml-3">Location</label>
+                    <input type="number" id="createtlocation" name="create_tlocation" class="form-control">
+                    <span id="errorLocation" class="help-block text-danger"></span>
+                  </div>
+                  <div class="form-group text-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                  <input type="hidden" name="action" value="createTask">
+                  <input id="eID" type="hidden" name="action" value="<?php echo $empID ?>">
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="modal-body">
-          <form action="" name="createTask" onsubmit="createT()" method="post">
 
-            <div>
-              <label class="ml-3">Task Name</label>
-              <input type="text" id="createtname" name="create_tname" class="form-control" required>
-              <span id="errorTName" class="help-block text-danger"></span>
-            </div>
-            <div>
-              <label class="ml-3">Task Description</label>
-              <input type="text" id="createtdesc" name="create_tdesc" class="form-control" required>
-              <span id="errorTDesc" class="help-block text-danger"></span>
-            </div>
-            <div>
-              <label class="ml-3">Task Type</label>
-              <input type="number" id="createttype" name="create_ttype" class="form-control" required>
-              <span id="errorTType" class="help-block text-danger"></span>
-            </div>
-            <div class="form-row mt-2">
-              <div class="form-group col-md-6">
-                <label class="ml-3">Min Price</label>
-                <input type="number" id="createminprice" name="create_minprice" class="form-control" required>
-                <span id="errorMinPrice" class="help-block text-danger"></span>
-              </div>
-              <div class="form-group col-md-6">
-                <label class="ml-3">Max Price</label>
-                <input type="number" id="createmaxprice" name="create_maxprice" class="form-control" required>
-                <span id="errorMaxPrice" class="help-block text-danger"></span>
-              </div>
-            </div>
-            <div class="form-row mt-2">
-              <div class="form-group col-md-6">
-                <label class="ml-3">Date Begin</label>
-                <input type="date" id="createdatebegin" name="createdatebegin" class="form-control" required>
-                <span id="errorDateBegin" class="help-block text-danger"></span>
-              </div>
-              <div class="form-group col-md-6">
-                <label class="ml-3">Date End</label>
-                <input type="date" id="createdateend" name="createdateend" class="form-control" required>
-                <span id="errorDateEnd" class="help-block text-danger"></span>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="ml-3">Location</label>
-              <input type="number" id="createtlocation" name="create_tlocation" class="form-control">
-              <span id="errorLocation" class="help-block text-danger"></span>
-            </div>
-            <div class="form-group text-center">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-            <input type="hidden" name="action" value="createTask">
-            <input id="eID" type="hidden" name="action" value="<?php echo $empID ?>">
-          </form>
+        <!-- modal end -->
+
         </div>
-      </div>
+        <footer class="footer-section text-center">
+          <div class="container">
+            <p>Copyright &copy; 2020 &middot; All Rights Reserved &middot; <a href="#">EmployME.bz</a></p>
+          </div>
+        </div>
+      
     </div>
   </div>
 
-  <!-- modal end -->
 
-
-    <div class="row">
-      <div class="text-center col-lg-6 offset-lg-3">
-        <p>Copyright &copy; 2020 &middot; All Rights Reserved &middot; <a href="#">EmployME.bz</a></p>
-      </div>
-    </div>
-  </div>
-  
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
