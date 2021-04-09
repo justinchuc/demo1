@@ -105,3 +105,33 @@ $(function () {
       });
     }
   }
+
+  function apply(taskID,tID) {
+    if (confirm("Are you sure you want to Apply for this task?")) {
+      $.ajax({
+        method: "POST",
+        url: "../model/applyTask.php",
+        data: {
+          "action": "apply",
+          "taskID": taskID,
+          "tID": tID
+
+        },
+      }).done(function (data) {
+        var results = JSON.parse(data);
+        if (results.state = "success") {
+          $("#createtask_success").html("<strong>Success</strong>  " + results.message);
+          $("#createtask_success").show();
+          setTimeout(function () {
+            location.reload();
+          }, 2000);
+        } else {
+          $("#createtask_failure").html("<strong>Failure</strong>  " + results.message);
+          $("#createtask_failure").show();
+          setTimeout(function () {
+            location.reload();
+          }, 3000);
+        }
+      });
+    }
+  }

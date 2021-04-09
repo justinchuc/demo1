@@ -127,6 +127,7 @@ while ($row = mysqli_fetch_array($result)) {
                 $i = 0;
                 while ($row = mysqli_fetch_array($result)) {
                   $i++;
+                  $taskID = $row["tID"];
                 ?>
                   <tr>
                     <td> <?php echo "T-" . $row["tID"] ?></td>
@@ -142,7 +143,7 @@ while ($row = mysqli_fetch_array($result)) {
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu">
                         <button class="dropdown-item" data-id="<?php echo $row["tID"]; ?>" >View Details</button>
                           <div class="dropdown-divider"></div>
-                          <button class="dropdown-item" data-id="<?php echo $row["tID"]; ?>" >Apply</button>
+                          <button class="dropdown-item" onclick="apply(<?php echo $taskID ?>,<?php echo $tID ?>)" >Apply</button>
 
                           <button class="dropdown-item" type="button">Another Action</button>
                         </div>
