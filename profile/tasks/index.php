@@ -64,6 +64,9 @@ while ($row = mysqli_fetch_array($result)) {
               <a class="nav-link" href="../tasks/">Tasks</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="../applications/">Applications</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="#">Account</a>
             </li>
             <li class="nav-item">
@@ -119,7 +122,9 @@ while ($row = mysqli_fetch_array($result)) {
                 tasks.taskStatus AS tStat,
                 location.locationName AS tLocation
                 FROM tasks
-                LEFT JOIN location ON tasks.locationID = location.locationID;";
+                LEFT JOIN location ON tasks.locationID = location.locationID
+                WHERE tasks.taskHandlerID = $tID
+                AND tasks.taskStatus = 'Assigned';";
                 $result = mysqli_query($link, $sql);
                 //if ($result->num_rows > 0) {
                 // output data of each row
@@ -138,9 +143,9 @@ while ($row = mysqli_fetch_array($result)) {
                         <button class="btn dropdown-toggle text-center green" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                          <a href="patdetails.php?GetID= <?php echo $row["ID"] ?>" class="dropdown-item">View Applications</a>
+                        <button class="dropdown-item">Decline</button>                         
                           <div class="dropdown-divider"></div>
-                          <button class="dropdown-item  edit_patient" data-id="<?php echo $row["tID"]; ?>" data-toggle="modal" data-target="#editTask">Edit</button>
+                          <button class="dropdown-item">Complete</button>                         
 
                           <button class="dropdown-item" type="button">Another Action</button>
                         </div>

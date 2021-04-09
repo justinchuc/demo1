@@ -4,10 +4,10 @@ session_start();
 
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-  header("location: ../login.php");
+  header("location: ../../login.php");
   exit;
 }
-require_once "../config.php";
+require_once "../../config.php";
 
 $accID =  $_SESSION["accountID"];
 $sql = "SELECT taskHandler.taskHandlerID AS tID,
@@ -23,7 +23,9 @@ while ($row = mysqli_fetch_array($result)) {
   $tID = $row["tID"];
   $tName = $row["tName"];
 }
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,7 +33,7 @@ while ($row = mysqli_fetch_array($result)) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard &mdash; EmployMe.bz</title>
+  <title>Applications &mdash; EmployMe.bz </title>
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -41,8 +43,7 @@ while ($row = mysqli_fetch_array($result)) {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.css" integrity="sha512-p209YNS54RKxuGVBVhL+pZPTioVDcYPZPYYlKWS9qVvQwrlzxBxkR8/48SCP58ieEuBosYiPUS970ixAfI/w/A==" crossorigin="anonymous" />
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
 
-  <link rel="stylesheet" media="all" href="../css/style.css" />
-
+  <link rel="stylesheet" media="all" href="../../css/style.css" />
 
 </head>
 
@@ -56,20 +57,20 @@ while ($row = mysqli_fetch_array($result)) {
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="../">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../tasks/">Tasks</a>
+            </li>
             <li class="nav-item active">
-              <a class="nav-link" href="../profile/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="tasks/">Tasks</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="applications/">Applications</a>
+              <a class="nav-link" href="../applications/">Applications</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Account</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../logout.php">Logout</a>
+              <a class="nav-link" href="../../logout.php">Logout</a>
             </li>
 
             <li class="nav-item">
@@ -82,14 +83,16 @@ while ($row = mysqli_fetch_array($result)) {
           </form>
         </div>
       </nav>
+      <!--nav end -->
 
-      <!-- nav end -->
-
-      <div class="container">
-      <!--tasks table-->
-      <div class="row row-content d-flex justify-content-center">
+      <div class="container"> <br>
+        <div class="row">
+       
+        </div>
+        <!--tasks table-->
+        <div class="row row-content d-flex justify-content-center">
           <br>
-          <h3 class="d-block">Open Tasks</h3>
+          <h3 class="d-block">Applications</h3>
 
           <div class="col-md-12 table-responsive table-sm">
             <br>
@@ -98,10 +101,9 @@ while ($row = mysqli_fetch_array($result)) {
                 <tr class="table-header">
 
                   <th>Task ID</th>
-                  <th>Employer</th>
                   <th>Task Name</th>
                   <th>Date Begin</th>
-                  <th>Status</th>
+                  <th>Application Status</th>
                   <th>Location</th>
                   <th>Action</th>
 
@@ -117,40 +119,33 @@ while ($row = mysqli_fetch_array($result)) {
                 $sql = "SELECT tasks.taskID AS tID,
                 tasks.taskName AS tName,
                 tasks.taskDateBegin AS tDate,
-                tasks.taskStatus AS tStat,
-                location.locationName AS tLocation,
-                CONCAT(employer.employerFName, ' ' , employer.employerLName) AS eName
+                application.applicationStatus AS appStat,
+                location.locationName AS tLocation
                 FROM tasks
                 LEFT JOIN location ON tasks.locationID = location.locationID
-                LEFT JOIN employer ON tasks.employerID = employer.employerID
                 LEFT JOIN application ON tasks.taskID = application.taskID
-                WHERE tasks.taskStatus = 'Open'
-                AND (tasks.taskID NOT IN(SELECT application.taskID FROM application WHERE taskHandlerID = $tID AND applicationStatus = 'Active'));";
+                WHERE application.taskHandlerID = $tID;";
                 $result = mysqli_query($link, $sql);
                 //if ($result->num_rows > 0) {
                 // output data of each row
                 $i = 0;
                 while ($row = mysqli_fetch_array($result)) {
                   $i++;
-                  $taskID = $row["tID"];
                 ?>
                   <tr>
                     <td> <?php echo "T-" . $row["tID"] ?></td>
-                    <td> <?php echo $row["eName"] ?></td>
-                    <td> <?php echo $row["tName"] ?></td>                   
+                    <td> <?php echo $row["tName"] ?></td>
                     <td> <?php echo $row["tDate"] ?></td>
-                    <td> <?php echo $row["tStat"] ?></td>
+                    <td> <?php echo $row["appStat"] ?></td>
                     <td> <?php echo $row["tLocation"] ?></td>
                     <td>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle text-center green" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                        <button class="dropdown-item" data-id="<?php echo $row["tID"]; ?>" >View Details</button>
-                          <div class="dropdown-divider"></div>
-                          <button class="dropdown-item" onclick="apply(<?php echo $taskID ?>,<?php echo $tID ?>)" >Apply</button>
-
-                          <button class="dropdown-item" type="button">Another Action</button>
+                        <button class="dropdown-item">Cancel</button>                         
+                         <div class="dropdown-divider"></div>
+                          <button class="dropdown-item">Another Action</button>
                         </div>
                       </div>
                     </td>
@@ -170,23 +165,29 @@ while ($row = mysqli_fetch_array($result)) {
           </div>
 
         </div>
-      </div>
 
+        
+
+      </div>
       <footer class="footer-section text-center">
         <div class="container">
           <p>Copyright &copy; 2020 &middot; All Rights Reserved &middot; <a href="#">EmployME.bz</a></p>
         </div>
       </footer>
+
     </div>
   </div>
+
+
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.js" integrity="sha512-tvs4l2C3VPcCHzUU1KGG+jWWTO7H0stvk1jwn6pr4B1uimcL/2api3rnmkMhVQ6DglgxLcqyLSDS1IF5eyeTRg==" crossorigin="anonymous"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
-  <script src="../controller/tasks.js"></script>
-      
+
+  <script src="../../controller/tasks.js"></script>
+
 </body>
 
 </html>
