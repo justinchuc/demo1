@@ -223,7 +223,9 @@ while ($row = mysqli_fetch_array($result)) {
                   </div>
                   <div class="form-group">
                     <label class="ml-3">Location</label>
-                    <input type="number" id="createtlocation" name="create_tlocation" class="form-control">
+                    <select type="number" id="createtlocation" name="create_tlocation" class="locationSelect form-control">
+                      <option value=""></option>
+                    </select>
                     <span id="errorLocation" class="help-block text-danger"></span>
                   </div>
                   <div class="form-group text-center">
