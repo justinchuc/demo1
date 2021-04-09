@@ -140,9 +140,9 @@ while ($row = mysqli_fetch_array($result)) {
                         <button class="btn dropdown-toggle text-center green" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                          <a href="patdetails.php?GetID= <?php echo $row["ID"] ?>" class="dropdown-item">View Applications</a>
+                        <button class="dropdown-item" data-id="<?php echo $row["tID"]; ?>" >View Details</button>
                           <div class="dropdown-divider"></div>
-                          <button class="dropdown-item  edit_patient" data-id="<?php echo $row["tID"]; ?>" data-toggle="modal" data-target="#editTask">Edit</button>
+                          <button class="dropdown-item" data-id="<?php echo $row["tID"]; ?>" >Apply</button>
 
                           <button class="dropdown-item" type="button">Another Action</button>
                         </div>
@@ -179,6 +179,8 @@ while ($row = mysqli_fetch_array($result)) {
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.js" integrity="sha512-tvs4l2C3VPcCHzUU1KGG+jWWTO7H0stvk1jwn6pr4B1uimcL/2api3rnmkMhVQ6DglgxLcqyLSDS1IF5eyeTRg==" crossorigin="anonymous"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+  <script src="../controller/tasks.js"></script>
+      
 </body>
 
 </html>
