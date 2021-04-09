@@ -8,7 +8,8 @@
   <title>Dashboard &mdash; EmployMe.bz</title>
 
   <!-- Bootstrap -->
-  <link href="../css/bootstrap-4.4.1.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 
 </head>
 
@@ -21,17 +22,18 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="../employer/">Home</a>
         </li>
-        <li class="nav-item"> </li>
-        <li class="nav-item dropdown">
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
+        <li class="nav-item">
+          <a class="nav-link" href="tasks.php">Tasks</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Account</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../logout.php">Logout</a>
+        </li>
+
         <li class="nav-item">
           <a class="nav-link disabled" href="#">&nbsp;</a>
         </li>
@@ -43,98 +45,10 @@
     </div>
   </nav>
 
-  <div class="jumbotron jumbotron-fluid text-center">
-    <h1 class="display-4">Job Posting</h1>
-    <hr class="my-4">
-    <form>
-      <div class="form-group col-xl-4">
-        <label for="exampleInputEmail1">Job Title</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Title">
-        <small id="emailHelp1" class="form-text text-muted">&nbsp;</small>
-      </div>
-      <div class="form-group col-xl-4">
-        <label for="exampleInputEmail2">Required Qualifications&nbsp;</label>
-        <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Qualifications">
-        <small id="emailHelp2" class="form-text text-muted">&nbsp;</small>
-      </div>
-      <div class="form-group col-xl-4">
-        <label for="exampleInputEmail3">Description</label>
-        <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Description">
-        <small id="emailHelp3" class="form-text text-muted">&nbsp;</small>
-      </div>
-      <div class="form-group col-xl-4">
-        <label for="exampleInputEmail4">Location</label>
-        <input type="email" class="form-control" id="exampleInputEmail4" placeholder="Location">
-        <small id="emailHelp4" class="form-text text-muted">&nbsp;</small>
-      </div>
-    </form>
-    <form>
-      <div class="form-group col-xl-4">
-        <label for="exampleInputEmail3">Skills Wanted</label>
-        <small id="emailHelp3" class="form-text text-muted">&nbsp;</small>
-        <table width="200">
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_0">
-                Construction</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_1">
-                Mail Service</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_2">
-                Driver</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_3">
-                Delivery Person</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_4">
-                Landscape</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_5">
-                PC Repair</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_6">
-                Mechanic</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_7">
-                Plumer</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_8">
-                Web Designer</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_9">
-                Checkbox</label></td>
-          </tr>
-        </table>
-      </div>
+  <!-- nav end -->
 
-    </form>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <p class="lead">&nbsp; </p>
-  </div>
   <div class="container"> <br>
-    <hr>
-    <br>
-    <br>
-    <hr>
+
     <div class="row">
       <div class="text-center col-lg-6 offset-lg-3">
         <p>Copyright &copy; 2020 &middot; All Rights Reserved &middot; <a href="#">EmployME.bz</a></p>
@@ -142,11 +56,9 @@
     </div>
   </div>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="js/jquery-3.4.1.min.js"></script>
-
-  <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap-4.4.1.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
 </html>
