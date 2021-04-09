@@ -4,25 +4,34 @@ $(function () {
    
   });
 
-  function createTask() {
+  function createT() {
 
     var name = document.getElementById("createtname").value;
     var desc = document.getElementById("createtdesc").value;
+    var type = document.getElementById("createttype").value;
+    var begin = document.getElementById("createdatebegin").value;
+    var end = document.getElementById("createdateend").value;
     var min = document.getElementById("createminprice").value;
     var max = document.getElementById("createmaxprice").value;
     var location = document.getElementById("createtlocation").value;
-  
+    var eID = document.getElementById("eID").value;
+    
+   // alert(name + desc + type + begin + end +  min + max + location + eID);
     if (confirm("Are you sure you want to save?")) {
       $.ajax({
         method: "POST",
         url: "../../model/tasks.php",
         data: {
-          "action": "newpat",
+          "action": "newtask",
           "name": name,
           "desc": desc,
+          "type": type,
+          "begin": begin,
+          "end": end,
           "min": min,
           "max": max,
-          "location": location
+          "location": location,
+          "eID": eID
   
         },
       }).done(function (data) {
