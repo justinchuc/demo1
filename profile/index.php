@@ -4,26 +4,26 @@ session_start();
 
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-  header("location: ../../login.php");
+  header("location: ../login.php");
   exit;
 }
-require_once "../../config.php";
+require_once "../config.php";
 
 $accID =  $_SESSION["accountID"];
-$sql = "SELECT employer.employerID AS eID
-        FROM employer
-        LEFT JOIN account ON employer.accountID = account.accountID
+$sql = "SELECT taskHandler.taskHandlerID AS tID,
+        CONCAT(taskHandler.taskHandlerFName, ' ' , taskHandler.taskHandlerLName) AS tName
+        FROM taskHandler
+        LEFT JOIN account ON taskHandler.accountID = account.accountID
         WHERE account.accountID = $accID";
 $result = mysqli_query($link, $sql);
 //if ($result->num_rows > 0) {
 // output data of each row
 $i = 0;
 while ($row = mysqli_fetch_array($result)) {
-  $empID = $row["eID"];
+  $tID = $row["tID"];
+  $tName = $row["tName"];
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,7 +31,7 @@ while ($row = mysqli_fetch_array($result)) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tasks &mdash; EmployMe.bz </title>
+  <title>Dashboard &mdash; EmployMe.bz</title>
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -41,7 +41,8 @@ while ($row = mysqli_fetch_array($result)) {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.css" integrity="sha512-p209YNS54RKxuGVBVhL+pZPTioVDcYPZPYYlKWS9qVvQwrlzxBxkR8/48SCP58ieEuBosYiPUS970ixAfI/w/A==" crossorigin="anonymous" />
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
 
-  <link rel="stylesheet" media="all" href="../../css/style.css" />
+  <link rel="stylesheet" media="all" href="../css/style.css" />
+
 
 </head>
 
@@ -55,17 +56,17 @@ while ($row = mysqli_fetch_array($result)) {
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../../employer/">Home</a>
-            </li>
             <li class="nav-item active">
-              <a class="nav-link" href="../tasks/">Tasks</a>
+              <a class="nav-link" href="../employer/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="tasks/">Tasks</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Account</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="../../logout.php">Logout</a>
+              <a class="nav-link" href="../logout.php">Logout</a>
             </li>
 
             <li class="nav-item">
@@ -78,22 +79,12 @@ while ($row = mysqli_fetch_array($result)) {
           </form>
         </div>
       </nav>
-      <!--nav end -->
 
-      <div class="container"> <br>
-        <div class="row">
-          <div class="col-md-12">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#createTask">Create Task</button>
-          </div>
-          <div class="alert_window">
-            <div id="createtask_success" class="alert alert-success show" role="alert">
-            </div>
-            <div id="createtask_failure" class="alert alert-danger show" role="alert">
-            </div>
-          </div>
-        </div>
-        <!--tasks table-->
-        <div class="row row-content d-flex justify-content-center">
+      <!-- nav end -->
+
+      <div class="container">
+      <!--tasks table-->
+      <div class="row row-content d-flex justify-content-center">
           <br>
           <h3 class="d-block">Open Tasks</h3>
 
@@ -104,6 +95,7 @@ while ($row = mysqli_fetch_array($result)) {
                 <tr class="table-header">
 
                   <th>Task ID</th>
+                  <th>Employer</th>
                   <th>Task Name</th>
                   <th>Date Begin</th>
                   <th>taskStatus</th>
@@ -123,10 +115,12 @@ while ($row = mysqli_fetch_array($result)) {
                 tasks.taskName AS tName,
                 tasks.taskDateBegin AS tDate,
                 tasks.taskStatus AS tStat,
-                location.locationName AS tLocation
+                location.locationName AS tLocation,
+                CONCAT(employer.employerFName, ' ' , employer.employerLName) AS eName
                 FROM tasks
                 LEFT JOIN location ON tasks.locationID = location.locationID
-                WHERE tasks.employerID = $empID;";
+                LEFT JOIN employer ON tasks.employerID = employer.employerID
+                WHERE tasks.taskStatus = 'Open';";
                 $result = mysqli_query($link, $sql);
                 //if ($result->num_rows > 0) {
                 // output data of each row
@@ -135,8 +129,9 @@ while ($row = mysqli_fetch_array($result)) {
                   $i++;
                 ?>
                   <tr>
-                    <td> <?php echo "T-".$row["tID"] ?></td>
-                    <td> <?php echo $row["tName"] ?></td>
+                    <td> <?php echo "T-" . $row["tID"] ?></td>
+                    <td> <?php echo $row["eName"] ?></td>
+                    <td> <?php echo $row["tName"] ?></td>                   
                     <td> <?php echo $row["tDate"] ?></td>
                     <td> <?php echo $row["tStat"] ?></td>
                     <td> <?php echo $row["tLocation"] ?></td>
@@ -169,101 +164,21 @@ while ($row = mysqli_fetch_array($result)) {
           </div>
 
         </div>
-        <!-- Create Task Modal -->
-        <div class="modal fade" id="createTask" tabindex="-1" role="dialog" aria-labelledby="createTaskLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="createTaskLabel">Create Task</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form action="" name="createTask" onsubmit="createT()" method="post">
-
-                  <div>
-                    <label class="ml-3">Task Name</label>
-                    <input type="text" id="createtname" name="create_tname" class="form-control" required>
-                    <span id="errorTName" class="help-block text-danger"></span>
-                  </div>
-                  <div>
-                    <label class="ml-3">Task Description</label>
-                    <input type="text" id="createtdesc" name="create_tdesc" class="form-control" required>
-                    <span id="errorTDesc" class="help-block text-danger"></span>
-                  </div>
-                  <div>
-                    <label class="ml-3">Task Type</label>
-                    <select id="createttype" name="create_ttype" class="typeSelect form-control" required>
-                      <option value=""></option>
-                    </select>
-                    <span id="errorTType" class="help-block text-danger"></span>
-                  </div>
-                  <div class="form-row mt-2">
-                    <div class="form-group col-md-6">
-                      <label class="ml-3">Min Price</label>
-                      <input type="number" id="createminprice" name="create_minprice" class="form-control" required>
-                      <span id="errorMinPrice" class="help-block text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label class="ml-3">Max Price</label>
-                      <input type="number" id="createmaxprice" name="create_maxprice" class="form-control" required>
-                      <span id="errorMaxPrice" class="help-block text-danger"></span>
-                    </div>
-                  </div>
-                  <div class="form-row mt-2">
-                    <div class="form-group col-md-6">
-                      <label class="ml-3">Date Begin</label>
-                      <input type="date" id="createdatebegin" name="createdatebegin" class="form-control" required>
-                      <span id="errorDateBegin" class="help-block text-danger"></span>
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label class="ml-3">Date End</label>
-                      <input type="date" id="createdateend" name="createdateend" class="form-control" required>
-                      <span id="errorDateEnd" class="help-block text-danger"></span>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="ml-3">Location</label>
-                    <select type="number" id="createtlocation" name="create_tlocation" class="locationSelect form-control">
-                      <option value=""></option>
-                    </select>
-                    <span id="errorLocation" class="help-block text-danger"></span>
-                  </div>
-                  <div class="form-group text-center">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-                  <input type="hidden" name="action" value="createTask">
-                  <input id="eID" type="hidden" name="action" value="<?php echo $empID ?>">
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- modal end -->
-
       </div>
+
       <footer class="footer-section text-center">
         <div class="container">
           <p>Copyright &copy; 2020 &middot; All Rights Reserved &middot; <a href="#">EmployME.bz</a></p>
         </div>
+      </footer>
     </div>
-
   </div>
-  </div>
-
-
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.js" integrity="sha512-tvs4l2C3VPcCHzUU1KGG+jWWTO7H0stvk1jwn6pr4B1uimcL/2api3rnmkMhVQ6DglgxLcqyLSDS1IF5eyeTRg==" crossorigin="anonymous"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
-
-  <script src="../../controller/tasks.js"></script>
-
 </body>
 
 </html>

@@ -10,16 +10,18 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 require_once "../../config.php";
 
 $accID =  $_SESSION["accountID"];
-$sql = "SELECT employer.employerID AS eID
-        FROM employer
-        LEFT JOIN account ON employer.accountID = account.accountID
+$sql = "SELECT taskHandler.taskHandlerID AS tID,
+        CONCAT(taskHandler.taskHandlerFName, ' ' , taskHandler.taskHandlerLName) AS tName
+        FROM taskHandler
+        LEFT JOIN account ON taskHandler.accountID = account.accountID
         WHERE account.accountID = $accID";
 $result = mysqli_query($link, $sql);
 //if ($result->num_rows > 0) {
 // output data of each row
 $i = 0;
 while ($row = mysqli_fetch_array($result)) {
-  $empID = $row["eID"];
+  $tID = $row["tID"];
+  $tName = $row["tName"];
 }
 
 ?>
@@ -56,7 +58,7 @@ while ($row = mysqli_fetch_array($result)) {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="../../employer/">Home</a>
+              <a class="nav-link" href="../">Home</a>
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="../tasks/">Tasks</a>
@@ -125,8 +127,7 @@ while ($row = mysqli_fetch_array($result)) {
                 tasks.taskStatus AS tStat,
                 location.locationName AS tLocation
                 FROM tasks
-                LEFT JOIN location ON tasks.locationID = location.locationID
-                WHERE tasks.employerID = $empID;";
+                LEFT JOIN location ON tasks.locationID = location.locationID;";
                 $result = mysqli_query($link, $sql);
                 //if ($result->num_rows > 0) {
                 // output data of each row
@@ -135,7 +136,7 @@ while ($row = mysqli_fetch_array($result)) {
                   $i++;
                 ?>
                   <tr>
-                    <td> <?php echo "T-".$row["tID"] ?></td>
+                    <td> <?php echo "T-" . $row["tID"] ?></td>
                     <td> <?php echo $row["tName"] ?></td>
                     <td> <?php echo $row["tDate"] ?></td>
                     <td> <?php echo $row["tStat"] ?></td>
@@ -169,6 +170,8 @@ while ($row = mysqli_fetch_array($result)) {
           </div>
 
         </div>
+
+        
         <!-- Create Task Modal -->
         <div class="modal fade" id="createTask" tabindex="-1" role="dialog" aria-labelledby="createTaskLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -249,9 +252,9 @@ while ($row = mysqli_fetch_array($result)) {
         <div class="container">
           <p>Copyright &copy; 2020 &middot; All Rights Reserved &middot; <a href="#">EmployME.bz</a></p>
         </div>
-    </div>
+      </footer>
 
-  </div>
+    </div>
   </div>
 
 
