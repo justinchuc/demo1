@@ -20,8 +20,21 @@ $result = mysqli_query($link, $sql);
 $i = 0;
 while ($row = mysqli_fetch_array($result)) {
   $empID = $row["eID"];
+
+  $taskID = $_GET['GetID'];
+
 }
 
+$sql2 = "SELECT taskTypeID, taskName, taskDescription, taskDateBegin, taskDateEnd, taskPriceERange, taskStatus, locationID
+FROM tasks
+WHERE taskID = $taskID; ";
+$result = mysqli_query($link, $sql2);
+//if ($result->num_rows > 0) {
+// output data of each row
+$i = 0;
+while ($row = mysqli_fetch_array($result)) {
+  
+}
 ?>
 
 <!DOCTYPE html>
@@ -95,19 +108,17 @@ while ($row = mysqli_fetch_array($result)) {
         <!--tasks table-->
         <div class="row row-content d-flex justify-content-center">
           <br>
-          <h3 class="d-block">Open Tasks</h3>
+          <h3 class="d-block">Applications</h3>
 
           <div class="col-md-12 table-responsive table-sm">
             <br>
             <table id="openTasksTable" class="table text-left table-striped">
               <thead>
                 <tr class="table-header">
-
-                  <th>Task ID</th>
-                  <th>Task Name</th>
-                  <th>Date Begin</th>
-                  <th>taskStatus</th>
-                  <th>Location</th>
+                 <th>Task ID</th>
+                  <th>Date</th>
+                  <th>Applicant Name</th>
+                  <th>Application Status</th>
                   <th>Action</th>
 
                 </tr>
@@ -119,14 +130,14 @@ while ($row = mysqli_fetch_array($result)) {
                 if ($link->connect_error) {
                   die("Connection failed: " . $link->connect_error);
                 }
-                $sql = "SELECT tasks.taskID AS tID,
-                tasks.taskName AS tName,
-                tasks.taskDateBegin AS tDate,
-                tasks.taskStatus AS tStat,
-                location.locationName AS tLocation
-                FROM tasks
-                LEFT JOIN location ON tasks.locationID = location.locationID
-                WHERE tasks.employerID = $empID;";
+                $sql = "SELECT application.taskID AS tID,
+                application.applicationTime AS aTime,
+                application.taskHandlerID AS tHID,
+                CONCAT(taskHandler.taskHandlerFName, ' ', taskHandler.taskHandlerLName) AS tHName,
+                application.applicationStatus AS aStatus
+                FROM application
+                LEFT JOIN taskHandler ON application.taskHandlerID = taskHandler.taskHandlerID
+                WHERE application.taskID = $taskID;";
                 $result = mysqli_query($link, $sql);
                 //if ($result->num_rows > 0) {
                 // output data of each row
@@ -136,18 +147,17 @@ while ($row = mysqli_fetch_array($result)) {
                 ?>
                   <tr>
                     <td> <?php echo "T-".$row["tID"] ?></td>
-                    <td> <?php echo $row["tName"] ?></td>
-                    <td> <?php echo $row["tDate"] ?></td>
-                    <td> <?php echo $row["tStat"] ?></td>
-                    <td> <?php echo $row["tLocation"] ?></td>
+                    <td> <?php echo $row["aTime"] ?></td>
+                    <td> <?php echo $row["tHName"] ?></td>
+                    <td> <?php echo $row["aStatus"] ?></td>
                     <td>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle text-center green" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                          <a href="applications.php?GetID=<?php echo $row["tID"] ?>" target="_blank" class="dropdown-item">View Applications</a>
+                        <button class="dropdown-item" type="button">Assign</button>
                           <div class="dropdown-divider"></div>
-                          <button class="dropdown-item  edit_patient" data-id="<?php echo $row["tID"]; ?>" data-toggle="modal" data-target="#editTask">Edit</button>
+                          <button class="dropdown-item" type="button">Deny</button>
 
                           <button class="dropdown-item" type="button">Another Action</button>
                         </div>
