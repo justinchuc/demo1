@@ -189,7 +189,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
               <h2>Welcome to EmployMe.bz</h2>
               <h4>Login</h4>
               <p>Please fill in your credentials to login.</p>
-              <form action="index.php" method="post">
+              <form action="login.php" method="post">
                 <div class="form-group ">
                   <label>Username</label>
                   <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
