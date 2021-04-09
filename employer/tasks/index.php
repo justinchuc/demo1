@@ -39,6 +39,7 @@ while ($row = mysqli_fetch_array($result)) {
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.css" integrity="sha512-p209YNS54RKxuGVBVhL+pZPTioVDcYPZPYYlKWS9qVvQwrlzxBxkR8/48SCP58ieEuBosYiPUS970ixAfI/w/A==" crossorigin="anonymous" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
 
   <link rel="stylesheet" media="all" href="../../css/style.css" />
 
@@ -133,7 +134,7 @@ while ($row = mysqli_fetch_array($result)) {
                   $i++;
                 ?>
                   <tr>
-                    <td> <?php echo $row["tID"] ?></td>
+                    <td> <?php echo "T-".$row["tID"] ?></td>
                     <td> <?php echo $row["tName"] ?></td>
                     <td> <?php echo $row["tDate"] ?></td>
                     <td> <?php echo $row["tStat"] ?></td>
@@ -258,6 +259,7 @@ while ($row = mysqli_fetch_array($result)) {
   <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.js" integrity="sha512-tvs4l2C3VPcCHzUU1KGG+jWWTO7H0stvk1jwn6pr4B1uimcL/2api3rnmkMhVQ6DglgxLcqyLSDS1IF5eyeTRg==" crossorigin="anonymous"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 
   <script src="../../controller/tasks.js"></script>
 

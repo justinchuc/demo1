@@ -2,6 +2,8 @@ $(function () {
     $("#createtask_failure").hide();
     $("#createtask_success").hide();
 
+    $('#openTasksTable').DataTable();
+    
     $(".typeSelect").select2({
       placeholder: "Type Task Type",
       minimumInputLength: 1,
