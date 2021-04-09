@@ -143,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 <html lang="en">
 
 <head>
-  <title>Dentium&mdash; Login</title>
+  <title>EmployMe&mdash; Login</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -151,21 +151,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
   <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i" rel="stylesheet">
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/bootstrap.min.css" />
-  <link rel="stylesheet" href="css/font-awesome.min.css" />
-  <link rel="stylesheet" href="css/themify-icons.css" />
-  <link rel="stylesheet" href="css/animate.css" />
-  <link rel="stylesheet" href="css/owl.carousel.css" />
-  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
 
-  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
 
 </head>
 
@@ -198,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         <div class="container">
           <div class="row row-content d-flex justify-content-center">
             <div class="col-md-5 text-center">
-              <h2>Welcome to Dentium</h2>
+              <h2>Welcome to EmployMe.bz</h2>
               <h4>Login</h4>
               <p>Please fill in your credentials to login.</p>
               <form action="index.php" method="post">
@@ -245,12 +233,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
   </div>
 
   <!--====== Javascripts & Jquery ======-->
-  <script src="/dentium/js/jquery-3.2.1.min.js"></script>
-  <script src="/dentium/js/owl.carousel.min.js"></script>
-  <script src="/dentium/js/jquery.countdown.js"></script>
-  <script src="/dentium/js/masonry.pkgd.min.js"></script>
-  <script src="/dentium/js/magnific-popup.min.js"></script>
-  <script src="/dentium/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
 
 </body>
 
