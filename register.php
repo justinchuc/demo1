@@ -77,11 +77,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       // Set parameters
       $param_username = $username;
       $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-
+      mysqli_stmt_execute($stmt);
 
 
       // Attempt to execute the prepared statement
-      if (mysqli_stmt_execute($stmt)) {
         $sql2 = "SELECT accountID FROM account WHERE username= $param_username ;";
 
         $fName=trim($_POST["fname"]);
@@ -110,9 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Redirect to login page
        
-      } else {
-        echo "Something went wrong. Please try again later.";
-      }
+      
 
 
 
