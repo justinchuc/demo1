@@ -23,6 +23,17 @@ while ($row = mysqli_fetch_array($result)) {
   $tID = $row["tID"];
   $tName = $row["tName"];
 }
+if (isset($_POST['save'])) {
+  $checkbox = $_POST['skill'];
+  for ($i = 0; $i < count($checkbox); $i++) {
+    $check_id = $checkbox[$i];
+    $sql = "INSERT taskHandlerID=$accID, taskSkillsStatus=1,taskTypeID=$check_id INTO taskHandlerSkills";
+    if (mysqli_multi_query($link, $sql)) {
+
+      header("location: employer/");
+    }
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -110,11 +121,11 @@ while ($row = mysqli_fetch_array($result)) {
           $i = 0;
           while ($row = mysqli_fetch_array($result)) {
             $i++;
-            $value=$row["taskTypeID"];
+            $value = $row["taskTypeID"];
             $taskName = $row["taskTypeName"];
           ?>
-            <input type="checkbox" id="<?php echo "skill".$i?>" name="<?php echo "skill".$i?>" value="<?php echo $value;?>">
-            <label for="<?php echo "skill".$i?>"> <?php echo $taskName; ?></label><br>
+            <input type="checkbox" id="<?php echo "skill" . $i ?>" name="skill[]" value="<?php echo $value; ?>">
+            <label for="<?php echo "skill" . $i ?>"> <?php echo $taskName; ?></label><br>
 
 
           <?php    }
@@ -124,7 +135,7 @@ while ($row = mysqli_fetch_array($result)) {
           //  $link->close();
           ?>
           <br>
-          <input type="submit" value="Submit">
+          <input type="submit" name="save" value="Submit">
         </form>
 
 
