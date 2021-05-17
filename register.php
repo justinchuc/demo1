@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       // Attempt to execute the prepared statement
       if (mysqli_stmt_execute($stmt)) {
-        $sql = "SELECT accountID FROM account WHERE username= $param_username ;";
+        $sql2 = "SELECT accountID FROM account WHERE username= $param_username ;";
 
         $fName=trim($_POST["fname"]);
         $lName=trim($_POST["lname"]);
@@ -90,14 +90,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $address=trim($_POST["address"]);
         $location=trim($_POST["location"]);
 
-        $result = mysqli_query($link, $sql);
+        $result = mysqli_query($link, $sql2);
         if ($result->num_rows = 1) {
           while ($row = mysqli_fetch_array($result)) {
            $accountID= $row["inv"];
-            $sql = "INSERT INTO  taskHandler ( accountID, taskHandlerFName, taskHandlerLName, taskHandlerEmail, taskHandlerAddress, locationID)
+            $sql3 = "INSERT INTO  taskHandler ( accountID, taskHandlerFName, taskHandlerLName, taskHandlerEmail, taskHandlerAddress, locationID)
     VALUES ('$accountID', '$fName', '$lName', '$email', '$address','1');";
     
-           if(mysqli_query($link, $sql)){ 
+           if(mysqli_query($link, $sql3)){ 
 
             header("location: login.php");
             exit();
