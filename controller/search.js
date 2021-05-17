@@ -40,20 +40,23 @@ $(function () {
         "location": lID
       },
     }).done(function (data) {
-
-        var jobList = [{
-            "text": "Help",
-            "type": "No way",
-        },
-        {
-            "text": "city",
-            "type": "green",
-        }
-    ];
+      
+      let results = JSON.parse(data);
+     // console.log('The data is', results);
+      if (results.success == true) {
+    //     var jobList = [{
+    //         "text": "Help",
+    //         "type": "No way",
+    //     },
+    //     {
+    //         "text": "city",
+    //         "type": "green",
+    //     }
+    // ];
 
         let cardContainer;
 
-        let createTaskCard = (jobList) => {
+        let createTaskCard = (results) => {
         
             let card = document.createElement('div');
             card.className = 'card shadow cursor-pointer';
@@ -62,11 +65,11 @@ $(function () {
             cardBody.className = 'card-body';
         
             let text = document.createElement('h5');
-            text.innerText = jobList.text;
+            text.innerText = results.text;
             text.className = 'card-title';
         
             let type= document.createElement('div');
-            type.innerText = jobList.type;
+            type.innerText = results.type;
             type.className = 'card-color';
         
         
@@ -89,10 +92,6 @@ $(function () {
             });
         };
         initListOfTasks();
-      
-      let results = JSON.parse(data);
-     // console.log('The data is', results);
-      if (results.success == true) {
         
       } else {
         $("#message_failure").html("<strong>Failure</strong>  " + results.message);
