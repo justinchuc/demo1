@@ -93,9 +93,13 @@ while ($row = mysqli_fetch_array($result)) {
       <!-- nav end -->
 
       <div class="container">
+
+      <div class="row row-content d-flex justify-content-center mt-3 ">
+      <div id="card-container" class = "card-group"></div>
+      </div>
       <!--tasks table-->
       <div class="row row-content d-flex justify-content-center mt-3">
-      <div id="card-container"></div>
+      
           <br>
           <h3 class="d-block">Open Tasks</h3>
 

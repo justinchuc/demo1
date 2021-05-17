@@ -49,7 +49,8 @@ function search($link, $empID, $location)
               $taskDescription = $row["tDesc"];
               $dateBegin = $row["tDBegin"];
               $success = true;
-              $jobList[] = array('success'=> true, 'id' => $id, 'text' => $typeName, 'emid' => $employerID, 'ename' => $employerName, 'tasktype' => $taskTypeID, 'taskName' => $taskName, 'description' => $taskDescription, 'datebegin' => $dateBegin);
+              //$ttID=$empID;
+              $jobList[] = array('thID'=> $empID ,'success'=> true, 'id' => $id, 'text' => $typeName, 'emid' => $employerID, 'ename' => $employerName, 'tasktype' => $taskTypeID, 'taskName' => $taskName, 'desc' => $taskDescription, 'datebegin' => $dateBegin);
             }
           }
         }
