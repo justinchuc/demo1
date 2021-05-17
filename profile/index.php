@@ -81,10 +81,12 @@ while ($row = mysqli_fetch_array($result)) {
               <a class="nav-link disabled" href="#">&nbsp;</a>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
+          
+          <select type="number" id="locationSelect" name="location" class="locationSelect form-control">
+                      <option value=""></option>
+                    </select>
+            <button class="btn btn-outline-success my-2 my-sm-0" onclick="search(<?php echo $tID ?>)">Search</button>
+          
         </div>
       </nav>
 
@@ -93,6 +95,7 @@ while ($row = mysqli_fetch_array($result)) {
       <div class="container">
       <!--tasks table-->
       <div class="row row-content d-flex justify-content-center mt-3">
+      <div id="card-container"></div>
           <br>
           <h3 class="d-block">Open Tasks</h3>
 
@@ -192,7 +195,7 @@ while ($row = mysqli_fetch_array($result)) {
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.js" integrity="sha512-tvs4l2C3VPcCHzUU1KGG+jWWTO7H0stvk1jwn6pr4B1uimcL/2api3rnmkMhVQ6DglgxLcqyLSDS1IF5eyeTRg==" crossorigin="anonymous"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
-  <script src="../controller/tasks.js"></script>
+  <script src="../controller/search.js"></script>
       
 </body>
 
