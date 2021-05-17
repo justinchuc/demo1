@@ -13,147 +13,111 @@
   <link rel="manifest" href="../../images/site.webmanifest">
 
   <!-- Bootstrap -->
-  <link href="css/bootstrap-4.4.1.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.css" integrity="sha512-p209YNS54RKxuGVBVhL+pZPTioVDcYPZPYYlKWS9qVvQwrlzxBxkR8/48SCP58ieEuBosYiPUS970ixAfI/w/A==" crossorigin="anonymous" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+  <link rel="stylesheet" media="all" href="css/style.css" />
+
 
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">EmployMe.bz</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item"> </li>
-        <li class="nav-item dropdown">
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
+  <div id="page-container">
+    <div id="content-wrap">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.php">EmployMe.bz</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About <span class="sr-only"></span></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container">
+        <div class="row row-content d-flex justify-content-center">
+          <div class="col-md-6 text-center">
+
+            <h4 class="mt-3">Register</h4>
+            <form>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="firstName">First Name</label>
+                  <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="lastName">Last Name</label>
+                  <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+                </div>
+                <div class="col-md-4">
+                  <label for="validationServerUsername">Username</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroupPrepend3">@</span>
+                    </div>
+                    <input type="text" class="form-control" id="validationServerUsername" placeholder="Username" aria-describedby="inputGroupPrepend3" required>
+                    
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail4">Email</label>
+                <input type="email" class="form-control" id="inputEmail" placeholder="Email" required>
+              </div>
+              <div class="form-group">
+                <label for="inputPassword4">Password</label>
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
+              </div>
+              <div class="form-group">
+                <label for="inputAddress">Address</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" required>
+              </div>
+
+              <div class="form-group">
+                <label for="inputCity">City/Town/Village</label>
+                <input type="text" class="form-control" id="inputLocation" required>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+
+
           </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">&nbsp;</a>
-        </li>
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
-    </div>
-  </nav>
+        </div>
 
-  <div class="jumbotron jumbotron-fluid text-center">
-    <h1 class="display-4">Registering</h1>
-    <hr class="my-4">
-    <form>
-      <div class="form-group col-xl-4">
-        <label for="exampleInputEmail1">Full Name</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter Name">
-        <small id="emailHelp1" class="form-text text-muted">&nbsp;</small>
       </div>
-      <div class="form-group col-xl-4">
-        <label for="exampleInputEmail2">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
-        <small id="emailHelp2" class="form-text text-muted">&nbsp;</small>
-      </div>
-      <div class="form-group col-xl-4">
-        <label for="exampleInputPassword1">DOB</label>
-        <label for="date">:</label>
-        <input type="date" name="date" id="date">
-      </div>
-    </form>
-    <form>
-      <div class="form-group col-xl-4">
-        <label for="exampleInputEmail3">Interests</label>
-        <small id="emailHelp3" class="form-text text-muted">&nbsp;</small>
-        <table width="200">
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_0">
-                Construction</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_1">
-                Mail Service</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_2">
-                Driver</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_3">
-                Delivery Person</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_4">
-                Landscape</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_5">
-                PC Repair</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_6">
-                Mechanic</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_7">
-                Plumer</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_8">
-                Web Designer</label></td>
-          </tr>
-          <tr>
-            <td><label>
-                <input type="checkbox" name="CheckboxGroup1" value="checkbox" id="CheckboxGroup1_9">
-                Checkbox</label></td>
-          </tr>
-        </table>
-      </div>
-      <div class="form-group col-xl-4">
-        <label for="exampleInputPassword2">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
-      </div>
-    </form>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <p class="lead">&nbsp; </p>
-  </div>
-  <div class="container"> <br>
-    <hr>
-    <br>
-    <br>
-    <hr>
-    <div class="row">
-      <div class="text-center col-lg-6 offset-lg-3">
-        Copyright &copy;
-        <script>
-            document.write(new Date().getFullYear());
-        </script> All rights reserved | EmployMe.bz
-      </div>
+
+
+      <footer class="footer-section text-center">
+        <div class="container">
+          <p>Copyright &copy; 2020 &middot; All Rights Reserved &middot; <a href="#">EmployME.bz</a></p>
+        </div>
+      </footer>
+
     </div>
   </div>
-  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="js/jquery-3.4.1.min.js"></script>
 
-  <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap-4.4.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.js" integrity="sha512-tvs4l2C3VPcCHzUU1KGG+jWWTO7H0stvk1jwn6pr4B1uimcL/2api3rnmkMhVQ6DglgxLcqyLSDS1IF5eyeTRg==" crossorigin="anonymous"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
 </body>
+
+
 
 </html>

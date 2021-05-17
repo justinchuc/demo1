@@ -22,7 +22,6 @@ while ($row = mysqli_fetch_array($result)) {
   $empID = $row["eID"];
 
   $taskID = $_GET['GetID'];
-
 }
 
 $sql2 = "SELECT taskTypeID, taskName, taskDescription, taskDateBegin, taskDateEnd, taskPriceERange, taskStatus, locationID
@@ -33,7 +32,6 @@ $result = mysqli_query($link, $sql2);
 // output data of each row
 $i = 0;
 while ($row = mysqli_fetch_array($result)) {
-  
 }
 ?>
 
@@ -46,11 +44,11 @@ while ($row = mysqli_fetch_array($result)) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tasks &mdash; EmployMe.bz </title>
 
- <!--favicon-->
-  <link rel="apple-touch-icon" sizes="180x180" href="../../images/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="../../images/favicon-16x16.png">
-  <link rel="manifest" href="../../images/site.webmanifest">
+  <!--favicon-->
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="manifest" href="images/site.webmanifest">
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -121,7 +119,7 @@ while ($row = mysqli_fetch_array($result)) {
             <table id="openTasksTable" class="table text-left table-striped">
               <thead>
                 <tr class="table-header">
-                 <th>Task ID</th>
+                  <th>Task ID</th>
                   <th>Date</th>
                   <th>Applicant Name</th>
                   <th>Application Status</th>
@@ -152,7 +150,7 @@ while ($row = mysqli_fetch_array($result)) {
                   $i++;
                 ?>
                   <tr>
-                    <td> <?php echo "T-".$row["tID"] ?></td>
+                    <td> <?php echo "T-" . $row["tID"] ?></td>
                     <td> <?php echo $row["aTime"] ?></td>
                     <td> <?php echo $row["tHName"] ?></td>
                     <td> <?php echo $row["aStatus"] ?></td>
@@ -161,7 +159,7 @@ while ($row = mysqli_fetch_array($result)) {
                         <button class="btn dropdown-toggle text-center green" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                        <button class="dropdown-item" type="button">Assign</button>
+                          <button class="dropdown-item" type="button">Assign</button>
                           <div class="dropdown-divider"></div>
                           <button class="dropdown-item" type="button">Deny</button>
 
@@ -265,9 +263,9 @@ while ($row = mysqli_fetch_array($result)) {
         <div class="container">
           <p>Copyright &copy; 2020 &middot; All Rights Reserved &middot; <a href="#">EmployME.bz</a></p>
         </div>
+      </footer>
     </div>
 
-  </div>
   </div>
 
 

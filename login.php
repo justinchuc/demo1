@@ -157,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
   <!-- Stylesheets -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-
+  <link rel="stylesheet" media="all" href="css/style.css" />
 
 
 </head>
@@ -216,20 +216,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         <!-- Footer section -->
 
 
-
-        <footer class="footer-section ">
-
-          <!-- copyright -->
-          <div class="copyright text-white">
-            <div class="container">
-
-              Copyright &copy;<script>
-                document.write(new Date().getFullYear());
-              </script> All rights reserved | EmployMe.bz</a>
-
-            </div>
-          </div>
-        </footer>
+        <footer class="footer-section text-center">
+        <div class="container">
+          <p>Copyright &copy; 2020 &middot; All Rights Reserved &middot; <a href="#">EmployME.bz</a></p>
+        </div>
+      </footer>
         <!-- Footer section end-->
 
       </div>
