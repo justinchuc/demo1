@@ -16,3 +16,23 @@
 	width: 100%;
 	height: 5rem; 
 }
+
+.open{
+	color:green;
+}
+
+.assigned{
+	color:green;
+}
+
+.active{
+	color:blue;
+}
+
+.declined{
+	color:red;
+}
+
+.cancelled{
+	color:red;
+}

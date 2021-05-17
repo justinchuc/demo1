@@ -35,6 +35,11 @@ while ($row = mysqli_fetch_array($result)) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tasks &mdash; EmployMe.bz </title>
 
+  <link rel="apple-touch-icon" sizes="180x180" href="../../images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href=".../../images/favicon-16x16.png">
+  <link rel="manifest" href="../../images/site.webmanifest">
+
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -87,7 +92,7 @@ while ($row = mysqli_fetch_array($result)) {
 
       <div class="container"> <br>
         <div class="row">
-       
+
         </div>
         <!--tasks table-->
         <div class="row row-content d-flex justify-content-center">
@@ -97,12 +102,11 @@ while ($row = mysqli_fetch_array($result)) {
           <div class="col-md-12 table-responsive table-sm">
             <br>
             <table id="openTasksTable" class="table text-left table-striped">
-              <thead>
+              <thead class="thead-dark">
                 <tr class="table-header">
-
+                  <th>Date Begin</th>
                   <th>Task ID</th>
                   <th>Task Name</th>
-                  <th>Date Begin</th>
                   <th>taskStatus</th>
                   <th>Location</th>
                   <th>Action</th>
@@ -118,34 +122,36 @@ while ($row = mysqli_fetch_array($result)) {
                 }
                 $sql = "SELECT tasks.taskID AS tID,
                 tasks.taskName AS tName,
-                tasks.taskDateBegin AS tDate,
+                DATE_FORMAT(tasks.taskDateBegin, '%M %d %Y') AS tDate,
                 tasks.taskStatus AS tStat,
                 location.locationName AS tLocation
                 FROM tasks
                 LEFT JOIN location ON tasks.locationID = location.locationID
                 WHERE tasks.taskHandlerID = $tID
-                AND tasks.taskStatus = 'Assigned';";
+                AND tasks.taskStatus = 'Assigned'
+                ORDER BY DATE_FORMAT(tasks.taskDateBegin, '%d %M %Y') DESC;";
                 $result = mysqli_query($link, $sql);
                 //if ($result->num_rows > 0) {
                 // output data of each row
                 $i = 0;
                 while ($row = mysqli_fetch_array($result)) {
                   $i++;
+                  $taskID = $row["tID"];
                 ?>
                   <tr>
+                    <td> <?php echo $row["tDate"] ?></td>
                     <td> <?php echo "T-" . $row["tID"] ?></td>
                     <td> <?php echo $row["tName"] ?></td>
-                    <td> <?php echo $row["tDate"] ?></td>
-                    <td> <?php echo $row["tStat"] ?></td>
-                    <td> <?php echo $row["tLocation"] ?></td>
+
+                    <td class = "<?php echo strtolower($row["tStat"]) ?>"> <?php echo $row["tStat"] ?></td>                    <td> <?php echo $row["tLocation"] ?></td>
                     <td>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle text-center green" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                        <button class="dropdown-item">Decline</button>                         
+                          <button class="dropdown-item" onclick="decline(<?php echo $taskID ?>)">Decline</button>
                           <div class="dropdown-divider"></div>
-                          <button class="dropdown-item">Complete</button>                         
+                          <button class="dropdown-item" onclick="complete(<?php echo $taskID ?>)">Complete</button>
 
                           <button class="dropdown-item" type="button">Another Action</button>
                         </div>
@@ -168,7 +174,7 @@ while ($row = mysqli_fetch_array($result)) {
 
         </div>
 
-        
+
 
       </div>
       <footer class="footer-section text-center">

@@ -92,20 +92,20 @@ while ($row = mysqli_fetch_array($result)) {
 
       <div class="container">
       <!--tasks table-->
-      <div class="row row-content d-flex justify-content-center">
+      <div class="row row-content d-flex justify-content-center mt-3">
           <br>
           <h3 class="d-block">Open Tasks</h3>
 
           <div class="col-md-12 table-responsive table-sm">
             <br>
             <table id="openTasksTable" class="table text-left table-striped">
-              <thead>
+              <thead class="thead-dark">
                 <tr class="table-header">
 
+                <th>Date Begin</th>
                   <th>Task ID</th>
                   <th>Employer</th>
-                  <th>Task Name</th>
-                  <th>Date Begin</th>
+                  <th>Task Name</th>                
                   <th>Status</th>
                   <th>Location</th>
                   <th>Action</th>
@@ -121,7 +121,7 @@ while ($row = mysqli_fetch_array($result)) {
                 }
                 $sql = "SELECT tasks.taskID AS tID,
                 tasks.taskName AS tName,
-                tasks.taskDateBegin AS tDate,
+                DATE_FORMAT(tasks.taskDateBegin, '%d %M %Y') AS tDate,
                 tasks.taskStatus AS tStat,
                 location.locationName AS tLocation,
                 CONCAT(employer.employerFName, ' ' , employer.employerLName) AS eName
@@ -130,7 +130,9 @@ while ($row = mysqli_fetch_array($result)) {
                 LEFT JOIN employer ON tasks.employerID = employer.employerID
                 LEFT JOIN application ON tasks.taskID = application.taskID
                 WHERE tasks.taskStatus = 'Open'
-                AND (tasks.taskID NOT IN(SELECT application.taskID FROM application WHERE taskHandlerID = $tID AND applicationStatus = 'Active'));";
+                AND (tasks.taskID NOT IN(SELECT application.taskID FROM application WHERE taskHandlerID = $tID AND applicationStatus = 'Active'))
+                ORDER BY DATE_FORMAT(tasks.taskDateBegin, '%d %M %Y') DESC
+                ;";
                 $result = mysqli_query($link, $sql);
                 //if ($result->num_rows > 0) {
                 // output data of each row
@@ -140,11 +142,11 @@ while ($row = mysqli_fetch_array($result)) {
                   $taskID = $row["tID"];
                 ?>
                   <tr>
+                  <td> <?php echo $row["tDate"] ?></td>
                     <td> <?php echo "T-" . $row["tID"] ?></td>
                     <td> <?php echo $row["eName"] ?></td>
                     <td> <?php echo $row["tName"] ?></td>                   
-                    <td> <?php echo $row["tDate"] ?></td>
-                    <td> <?php echo $row["tStat"] ?></td>
+                    <td class = "<?php echo strtolower($row["tStat"]) ?>"> <?php echo $row["tStat"] ?></td>
                     <td> <?php echo $row["tLocation"] ?></td>
                     <td>
                       <div class="dropdown">

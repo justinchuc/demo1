@@ -35,6 +35,12 @@ while ($row = mysqli_fetch_array($result)) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Applications &mdash; EmployMe.bz </title>
 
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../../images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href=".../../images/favicon-16x16.png">
+  <link rel="manifest" href="../../images/site.webmanifest">
+
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -97,12 +103,12 @@ while ($row = mysqli_fetch_array($result)) {
           <div class="col-md-12 table-responsive table-sm">
             <br>
             <table id="openTasksTable" class="table text-left table-striped">
-              <thead>
+              <thead class="thead-dark">
                 <tr class="table-header">
 
+                <th>Date Begin</th>
                   <th>Task ID</th>
-                  <th>Task Name</th>
-                  <th>Date Begin</th>
+                  <th>Task Name</th>                  
                   <th>Application Status</th>
                   <th>Location</th>
                   <th>Action</th>
@@ -118,13 +124,14 @@ while ($row = mysqli_fetch_array($result)) {
                 }
                 $sql = "SELECT tasks.taskID AS tID,
                 tasks.taskName AS tName,
-                tasks.taskDateBegin AS tDate,
+                DATE_FORMAT(tasks.taskDateBegin, '%M %d %Y')AS tDate,
                 application.applicationStatus AS appStat,
                 location.locationName AS tLocation
                 FROM tasks
                 LEFT JOIN location ON tasks.locationID = location.locationID
                 LEFT JOIN application ON tasks.taskID = application.taskID
-                WHERE application.taskHandlerID = $tID;";
+                WHERE application.taskHandlerID = $tID
+                ORDER BY DATE_FORMAT(tasks.taskDateBegin, '%d %M %Y') DESC;";
                 $result = mysqli_query($link, $sql);
                 //if ($result->num_rows > 0) {
                 // output data of each row
@@ -133,11 +140,10 @@ while ($row = mysqli_fetch_array($result)) {
                   $i++;
                 ?>
                   <tr>
+                  <td> <?php echo $row["tDate"] ?></td>
                     <td> <?php echo "T-" . $row["tID"] ?></td>
                     <td> <?php echo $row["tName"] ?></td>
-                    <td> <?php echo $row["tDate"] ?></td>
-                    <td> <?php echo $row["appStat"] ?></td>
-                    <td> <?php echo $row["tLocation"] ?></td>
+                    <td class = "<?php echo strtolower($row["appStat"]) ?>"> <?php echo $row["appStat"] ?></td>                    <td> <?php echo $row["tLocation"] ?></td>
                     <td>
                       <div class="dropdown">
                         <button class="btn dropdown-toggle text-center green" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
