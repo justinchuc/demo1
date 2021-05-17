@@ -1,3 +1,101 @@
+<?php
+
+//Initialize the session
+session_start();
+
+// Include config file
+require_once "config.php";
+ 
+// Define variables and initialize with empty values
+$username = $password = $confirm_password = "";
+$username_err = $password_err = $confirm_password_err = "";
+ 
+// Processing form data when form is submitted
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+ 
+  
+        // Prepare a select statement
+        $sql = "SELECT accountID FROM account WHERE username = ?";
+        
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "s", $param_username);
+            
+            // Set parameters
+            $param_username = trim($_POST["username"]);
+            
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                /* store result */
+                mysqli_stmt_store_result($stmt);
+                
+                if(mysqli_stmt_num_rows($stmt) == 1){
+                    $username_err = "This username is already taken.";
+                } else{
+                    $username = trim($_POST["username"]);
+                }
+            } else{
+                echo "Oops! Something went wrong. Please try again later.";
+            }
+
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+    
+
+
+    
+    // Validate password
+    if(empty(trim($_POST["password"]))){
+        $password_err = "Please enter a password.";     
+    } elseif(strlen(trim($_POST["password"])) < 6){
+        $password_err = "Password must have atleast 6 characters.";
+    } else{
+        $password = trim($_POST["password"]);
+    }
+    
+    // Validate confirm password
+    if(empty(trim($_POST["confirm_password"]))){
+        $confirm_password_err = "Please confirm password.";     
+    } else{
+        $confirm_password = trim($_POST["confirm_password"]);
+        if(empty($password_err) && ($password != $confirm_password)){
+            $confirm_password_err = "Password did not match.";
+        }
+    }
+    
+    // Check input errors before inserting in database
+    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
+        
+        // Prepare an insert statement
+        $sql = "INSERT INTO account (username, password, accountType, accountStatus) VALUES (?, ?, 1,1)";
+         
+        if($stmt = mysqli_prepare($link, $sql)){
+            // Bind variables to the prepared statement as parameters
+            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
+            
+            // Set parameters
+            $param_username = $username;
+            $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+            
+            // Attempt to execute the prepared statement
+            if(mysqli_stmt_execute($stmt)){
+                // Redirect to login page
+                header("location: login.php");
+                exit();
+            } else{
+                echo "Something went wrong. Please try again later.";
+            }
+
+            // Close statement
+            mysqli_stmt_close($stmt);
+        }
+    }
+    
+    // Close connection
+    mysqli_close($link);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +108,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
-  <link rel="manifest" href="../../images/site.webmanifest">
+  <link rel="manifest" href="images/site.webmanifest">
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -49,9 +147,9 @@
           <div class="col-md-6 text-center">
 
             <h4 class="mt-3">Register</h4>
-            <form>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
               <div class="form-row">
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-4">git 
                   <label for="firstName">First Name</label>
                   <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
                 </div>
@@ -65,7 +163,8 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="inputGroupPrepend3">@</span>
                     </div>
-                    <input type="text" class="form-control" id="validationServerUsername" placeholder="Username" aria-describedby="inputGroupPrepend3" required>
+                    <input type="text" class="form-control" id="validationServerUsername" placeholder="Username" name="username" aria-describedby="inputGroupPrepend3" required>
+                    <span class="help-block"><?php echo $username_err; ?></span>
                     
                   </div>
                 </div>
@@ -76,11 +175,11 @@
               </div>
               <div class="form-group">
                 <label for="inputPassword4">Password</label>
-                <input type="password" class="form-control" id="inputPassword" placeholder="Password" required>
+                <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password" required>
               </div>
               <div class="form-group">
                 <label for="confirmPassword">Confirm Password</label>
-                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
+                <input type="password" class="form-control" id="confirmPassword" name="confirm_password" placeholder="Confirm Password" required>
               </div>
               <div class="form-group">
                 <label for="inputAddress">Address</label>
