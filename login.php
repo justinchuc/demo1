@@ -3,11 +3,9 @@
 session_start();
 
 // Check if the user is already logged in, if yes then redirect him to welcome page
-if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true)
-{
+if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
   //header("location: welcome.php");
-  switch ($_SESSION["accountType"])
-  {
+  switch ($_SESSION["accountType"]) {
     case 1:
       header("location: employer/");
       exit();
@@ -28,37 +26,28 @@ $username = $password = "";
 $username_err = $password_err = "";
 
 // Processing form data when form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST")
-{
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // Check if username is empty
-  if (empty(trim($_POST["username"])))
-  {
+  if (empty(trim($_POST["username"]))) {
     $username_err = "Please enter username.";
-  }
-  else
-  {
+  } else {
     $username = trim($_POST["username"]);
   }
 
   // Check if password is empty
-  if (empty(trim($_POST["password"])))
-  {
+  if (empty(trim($_POST["password"]))) {
     $password_err = "Please enter your password.";
-  }
-  else
-  {
+  } else {
     $password = trim($_POST["password"]);
   }
 
   // Validate credentials
-  if (empty($username_err) && empty($password_err))
-  {
+  if (empty($username_err) && empty($password_err)) {
     // Prepare a select statement
     $sql = "SELECT account.accountID, account.username, account.password , account.accountType FROM account WHERE account.username = ?";
 
-    if ($stmt = mysqli_prepare($link, $sql))
-    {
+    if ($stmt = mysqli_prepare($link, $sql)) {
       // Bind variables to the prepared statement as parameters
       mysqli_stmt_bind_param($stmt, "s", $param_username);
 
@@ -66,20 +55,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
       $param_username = $username;
 
       // Attempt to execute the prepared statement
-      if (mysqli_stmt_execute($stmt))
-      {
+      if (mysqli_stmt_execute($stmt)) {
         // Store result
         mysqli_stmt_store_result($stmt);
 
         // Check if username exists, if yes then verify password
-        if (mysqli_stmt_num_rows($stmt) == 1)
-        {
+        if (mysqli_stmt_num_rows($stmt) == 1) {
           // Bind result variables
           $stmt->bind_result($id, $username, $hashed_password, $account);
-          if (mysqli_stmt_fetch($stmt))
-          {
-            if (password_verify($password, $hashed_password))
-            {
+          if (mysqli_stmt_fetch($stmt)) {
+            if (password_verify($password, $hashed_password)) {
               // Password is correct, so start a new session
               session_start();
 
@@ -89,35 +74,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
               $_SESSION["username"] = $username;
               $_SESSION["accountType"] = $account;
               // Redirect user to welcome page                       
+              $sql = "SELECT fLogin FROM account WHERE accountID=$id";
+              $result = mysqli_query($link, $sql);
+              //if ($result->num_rows > 0) {
+              // output data of each row
+              while ($row = mysqli_fetch_array($result)) {
+                $fLogin = $row["fLogin"];
+                
+              }
 
-
-              switch ($account)
-              {
+              switch ($account) {
                 case 1:
                   header("location: employer/");
                   exit();
                   break;
                 case 2:
+                  if($fLogin==0){
+                    header("location: profile/skills.php");
+                    exit();
+                    break;
+                  }
                   header("location: profile/");
                   exit();
                   break;
               }
-            }
-            else
-            {
+            } else {
               // Display an error message if password is not valid
               $password_err = "The password you entered was not valid.";
             }
           }
-        }
-        else
-        {
+        } else {
           // Display an error message if username doesn't exist
           $username_err = "No account found with that username.";
         }
-      }
-      else
-      {
+      } else {
         $username_err = "Oops! Something went wrong. Please try again later.";
       }
 
@@ -217,10 +207,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
 
         <footer class="footer-section text-center">
-        <div class="container">
-          <p>Copyright &copy; 2020 &middot; All Rights Reserved &middot; <a href="#">EmployME.bz</a></p>
-        </div>
-      </footer>
+          <div class="container">
+            <p>Copyright &copy; 2020 &middot; All Rights Reserved &middot; <a href="#">EmployME.bz</a></p>
+          </div>
+        </footer>
         <!-- Footer section end-->
 
       </div>
