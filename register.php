@@ -5,95 +5,125 @@ session_start();
 
 // Include config file
 require_once "config.php";
- 
+
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
- 
+
 // Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST"){
- 
-  
-        // Prepare a select statement
-        $sql = "SELECT accountID FROM account WHERE username = ?";
-        
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
-            
-            // Set parameters
-            $param_username = trim($_POST["username"]);
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-                
-                if(mysqli_stmt_num_rows($stmt) == 1){
-                    $username_err = "This username is already taken.";
-                } else{
-                    $username = trim($_POST["username"]);
-                }
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
-            }
-
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
-    
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
-    
-    // Validate password
-    if(empty(trim($_POST["password"]))){
-        $password_err = "Please enter a password.";     
-    } elseif(strlen(trim($_POST["password"])) < 6){
-        $password_err = "Password must have atleast 6 characters.";
-    } else{
-        $password = trim($_POST["password"]);
+  // Prepare a select statement
+  $sql = "SELECT accountID FROM account WHERE username = ?";
+
+  if ($stmt = mysqli_prepare($link, $sql)) {
+    // Bind variables to the prepared statement as parameters
+    mysqli_stmt_bind_param($stmt, "s", $param_username);
+
+    // Set parameters
+    $param_username = trim($_POST["username"]);
+
+    // Attempt to execute the prepared statement
+    if (mysqli_stmt_execute($stmt)) {
+      /* store result */
+      mysqli_stmt_store_result($stmt);
+
+      if (mysqli_stmt_num_rows($stmt) == 1) {
+        $username_err = "This username is already taken.";
+      } else {
+        $username = trim($_POST["username"]);
+      }
+    } else {
+      echo "Oops! Something went wrong. Please try again later.";
     }
-    
-    // Validate confirm password
-    if(empty(trim($_POST["confirm_password"]))){
-        $confirm_password_err = "Please confirm password.";     
-    } else{
-        $confirm_password = trim($_POST["confirm_password"]);
-        if(empty($password_err) && ($password != $confirm_password)){
-            $confirm_password_err = "Password did not match.";
-        }
-    }
-    
-    // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
-        
-        // Prepare an insert statement
-        $sql = "INSERT INTO account (username, password, accountType, accountStatus) VALUES (?, ?, 1,1)";
-         
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
-            
-            // Set parameters
-            $param_username = $username;
-            $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                // Redirect to login page
-                header("location: login.php");
-                exit();
-            } else{
-                echo "Something went wrong. Please try again later.";
-            }
 
-            // Close statement
-            mysqli_stmt_close($stmt);
-        }
+    // Close statement
+    mysqli_stmt_close($stmt);
+  }
+
+
+
+
+  // Validate password
+  if (empty(trim($_POST["password"]))) {
+    $password_err = "Please enter a password.";
+  } elseif (strlen(trim($_POST["password"])) < 6) {
+    $password_err = "Password must have atleast 6 characters.";
+  } else {
+    $password = trim($_POST["password"]);
+  }
+
+  // Validate confirm password
+  if (empty(trim($_POST["confirm_password"]))) {
+    $confirm_password_err = "Please confirm password.";
+  } else {
+    $confirm_password = trim($_POST["confirm_password"]);
+    if (empty($password_err) && ($password != $confirm_password)) {
+      $confirm_password_err = "Password did not match.";
     }
+  }
+
+  // Check input errors before inserting in database
+  if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
+
+    // Prepare an insert statement
+    $sql = "INSERT INTO account (username, password, accountType, accountStatus) VALUES (?, ?, 1,1)";
+
+    if ($stmt = mysqli_prepare($link, $sql)) {
+      // Bind variables to the prepared statement as parameters
+      mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
+
+      // Set parameters
+      $param_username = $username;
+      $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+
+
+
+      // Attempt to execute the prepared statement
+      if (mysqli_stmt_execute($stmt)) {
+        $sql = "SELECT accountID FROM account WHERE username= $param_username ;";
+
+        $fName=trim($_POST["fname"]);
+        $lName=trim($_POST["lname"]);
+        $email=trim($_POST["email"]);
+        $address=trim($_POST["address"]);
+        $location=trim($_POST["location"]);
+
+        $result = mysqli_query($link, $sql);
+        if ($result->num_rows = 1) {
+          while ($row = mysqli_fetch_array($result)) {
+           $accountID= $row["inv"];
+            $sql = "INSERT INTO  taskHandler ( accountID, taskHandlerFName, taskHandlerLName, taskHandlerEmail, taskHandlerAddress, locationID)
+    VALUES ('$accountID', '$fName', '$lName', '$email', '$address','1');";
     
-    // Close connection
-    mysqli_close($link);
+           if(mysqli_query($link, $sql)){ 
+
+            header("location: login.php");
+            exit();
+           }
+          }
+        }
+        else{
+          echo "Oops! Something went wrong!!!!!";
+        }
+
+        // Redirect to login page
+       
+      } else {
+        echo "Something went wrong. Please try again later.";
+      }
+
+
+
+
+      // Close statement
+      mysqli_stmt_close($stmt);
+    }
+  }
+
+  // Close connection
+  mysqli_close($link);
 }
 ?>
 <!DOCTYPE html>
@@ -149,13 +179,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <h4 class="mt-3">Register</h4>
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
               <div class="form-row">
-                <div class="form-group col-md-4">git 
+                <div class="form-group col-md-4">
                   <label for="firstName">First Name</label>
-                  <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+                  <input type="text" class="form-control" id="firstName" name="fname" placeholder="First Name" required>
                 </div>
                 <div class="form-group col-md-4">
                   <label for="lastName">Last Name</label>
-                  <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+                  <input type="text" class="form-control" id="lastName" name="lname"placeholder="Last Name" required>
                 </div>
                 <div class="col-md-4">
                   <label for="validationServerUsername">Username</label>
@@ -165,13 +195,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     </div>
                     <input type="text" class="form-control" id="validationServerUsername" placeholder="Username" name="username" aria-describedby="inputGroupPrepend3" required>
                     <span class="help-block"><?php echo $username_err; ?></span>
-                    
+
                   </div>
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputEmail4">Email</label>
-                <input type="email" class="form-control" id="inputEmail" placeholder="Email" required>
+                <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email" required>
               </div>
               <div class="form-group">
                 <label for="inputPassword4">Password</label>
@@ -183,12 +213,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
               </div>
               <div class="form-group">
                 <label for="inputAddress">Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" required>
+                <input type="text" class="form-control" id="inputAddress" name = "address" placeholder="1234 Main St" required>
               </div>
 
               <div class="form-group">
                 <label for="inputCity">City/Town/Village</label>
-                <input type="text" class="form-control" id="inputLocation" required>
+                <input type="text" class="form-control" id="inputLocation" name="location" required>
               </div>
 
               <button type="submit" class="btn btn-primary">Register</button>
