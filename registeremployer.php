@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
 
     // Prepare an insert statement
-    $sql = "INSERT INTO account (username, password, accountType, accountStatus) VALUES (?, ?, 2,1)";
+    $sql = "INSERT INTO account (username, password, accountType, accountStatus) VALUES (?, ?, 1,1)";
 
     if ($stmt = mysqli_prepare($link, $sql)) {
       // Bind variables to the prepared statement as parameters
@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = mysqli_query($link, $sql2);
           while ($row = mysqli_fetch_array($result)) {
             $accountID = $row["accountID"];
-            $sql3 = "INSERT INTO  taskHandler ( accountID, taskHandlerFName, taskHandlerLName, taskHandlerEmail, taskHandlerAddress, locationID)
+            $sql3 = "INSERT INTO  employer ( accountID, employerFName, employerLName, employerEmail, employerAddress, locationID)
     VALUES ('$accountID', '$fName', '$lName', '$email', '$address','$location');";
 
             if (mysqli_query($link, $sql3)) {
@@ -172,7 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       <div class="container">
         <div class="row row-content d-flex justify-content-center">
-          <div class="col-md-6 text-center mb-5">
+          <div class="col-md-6 text-center">
 
             <h4 class="mt-3">Register</h4>
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
