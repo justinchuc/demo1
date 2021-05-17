@@ -123,6 +123,7 @@ while ($row = mysqli_fetch_array($result)) {
 
           //  $link->close();
           ?>
+          <br>
           <input type="submit" value="Submit">
         </form>
 
